@@ -28,31 +28,30 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository:**
 
-   \`\`\`bash
+   ```bash
    git clone <https://github.com/your-username/presentation-platform.git>
-   \`\`\`
+   ```
 
 2. **Navigate to the project directory:**
 
-   \`\`\`bash
+   ```bash
    cd presentation-platform
-   \`\`\`
+   ```
 
 3. **Install dependencies:**
 
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
 
 ## Environment Variables
 
 Create a \`.env\` file in the root directory of your project and add the following environment variables:
 
-\`\`\`bash
+```bash
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/presentations
-\`\`\`
-
+```
 - **\`PORT\`**: The port on which the server will run.
 - **\`MONGO_URI\`**: The MongoDB connection string.
 
@@ -60,9 +59,9 @@ MONGO_URI=mongodb://localhost:27017/presentations
 
 To start the server, run:
 
-\`\`\`bash
+```bash
 npm start
-\`\`\`
+```
 
 The server will start on \`<http://localhost:3000\`>.
 
@@ -72,7 +71,6 @@ The API is documented with Swagger. To access the documentation:
 
 1. Make sure the server is running.
 2. Open your browser and navigate to \`<http://localhost:3000/api-docs\`>.
-
 
 ## CRUD Operations
 
@@ -90,4 +88,3 @@ The API is documented with Swagger. To access the documentation:
 - **Altering a Slide**: Send a `PUT` request to `/presentations/:title/slides/:slideId` to update a slide's content.
 - **Deleting a Slide**: Send a `DELETE` request to `/presentations/:title/slides/:slideId`.
 - **Altering the Authors List**: Send a `PUT` request to `/presentations/:title` to update the authors list.
-
