@@ -1,0 +1,304 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Presentation API",
+    "version": "1.0.0",
+    "description": "API for managing presentations and slides."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get all presentations",
+        "operationId": "getAllPresentations",
+        "responses": {
+          "200": {
+            "description": "A list of presentations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Presentation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new presentation",
+        "operationId": "createPresentation",
+        "requestBody": {
+          "description": "Presentation object that needs to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Presentation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Presentation created"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "409": {
+            "description": "Duplicate title"
+          }
+        }
+      }
+    },
+    "/{title}": {
+      "get": {
+        "summary": "Get a presentation by title",
+        "operationId": "getPresentationByTitle",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Presentation data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Presentation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Presentation not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a presentation by title",
+        "operationId": "deletePresentationByTitle",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Presentation deleted"
+          },
+          "404": {
+            "description": "Presentation not found"
+          }
+        }
+      }
+    },
+    "/{title}/slides": {
+      "post": {
+        "summary": "Add a slide to a presentation",
+        "operationId": "addSlideToPresentation",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Slide content",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Slide"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Slide added"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Presentation not found"
+          }
+        }
+      }
+    },
+    "/{title}/slides/{slideId}": {
+      "patch": {
+        "summary": "Alter a slide in a presentation",
+        "operationId": "alterSlideInPresentation",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slideId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Slide content",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Slide"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Slide updated"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Presentation or slide not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a slide from a presentation",
+        "operationId": "deleteSlideFromPresentation",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slideId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Slide deleted"
+          },
+          "404": {
+            "description": "Presentation or slide not found"
+          }
+        }
+      }
+    },
+    "/{title}/authors": {
+      "patch": {
+        "summary": "Update authors list in a presentation",
+        "operationId": "updateAuthorsList",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New authors list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Authors list updated"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Presentation not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Presentation": {
+        "type": "object",
+        "required": ["title", "authors"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "slides": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Slide"
+            }
+          }
+        }
+      },
+      "Slide": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

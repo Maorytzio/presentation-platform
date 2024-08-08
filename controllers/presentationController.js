@@ -103,12 +103,8 @@ const deleteSlideFromPresentation = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Presentation not found" });
   }
 
-  const slide = presentation.slides.id(slideId);
-  if (!slide) {
-    return res.status(404).json({ message: "Slide not found" });
-  }
 
-  slide.remove();
+  presentation.slides.pull({ _id: slideId });
   await presentation.save();
 
   res.json({

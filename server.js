@@ -11,12 +11,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const presentationRoutes = require("./routes/presentationRoutes");
 
+
+
 connectDB();
 app.use(logger);
 
 app.use(express.json());
 
 app.use("/presentations", presentationRoutes);
+
+if (process.env.NODE_ENV === "development") {
+  const swaggerConfig = require('./docs/swaggerConfig');
+  swaggerConfig(app);
+}
 
 app.all("*", (req, res) => {
   res.status(404);
@@ -28,6 +35,7 @@ app.all("*", (req, res) => {
 });
 
 app.use(errorHandler);
+
 
 mongoose.connection.once("open", () => {
   console.log("Connected to mongoDB");
