@@ -1,6 +1,6 @@
 # Presentation Platform API
 
-This project is a server-side service built using Node.js and Express for managing presentations and slides. The application allows users to create, fetch, update, and delete presentations and slides, using MongoDB as the database. The project follows best engineering practices and includes API documentation with Swagger and unit tests with Jest.
+This project is a server-side service built using Node.js and Express for managing presentations and slides. The application allows users to create, fetch, update, and delete presentations and slides, using MongoDB as the database and includes API documentation with Swagger.
 
 ## Table of Contents
 
@@ -57,26 +57,30 @@ MONGO_URI=mongodb://localhost:27017/presentations
 
 ## Running the Application
 
-To start the server, run:
+To start the server dev mode where Swagger is available, run:
 
+```bash
+npm run dev
+```
+The server will start on \`<http://localhost:3000\`>.
+
+To start the server , run:
 ```bash
 npm start
 ```
-
-The server will start on \`<http://localhost:3000\`>.
 
 ## API Documentation
 
 The API is documented with Swagger. To access the documentation:
 
-1. Make sure the server is running.
+1. Make sure the server is running in dev mode ``` npm run dev```.
 2. Open your browser and navigate to \`<http://localhost:3000/api-docs\`>.
 
 ## CRUD Operations
 
 ### Presentation Operations
 
-- **Create a New Presentation**: Send a `POST` request to `/presentations` with the title and authors.
+- **Create a New Presentation**: Send a `POST` request to `/presentations` with the title, authors, and Slides.
 - **Fetch a Presentation by Title (Unique)**: Send a `GET` request to `/presentations/:title`.
 - **Get All Presentations**: Send a `GET` request to `/presentations`.
 - **Update a Presentation**: Send a `PUT` request to `/presentations/:title`.
