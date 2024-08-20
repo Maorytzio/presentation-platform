@@ -6,22 +6,26 @@ const connectDB = require("./config/dbConnection");
 
 const { logger, logEvents } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
-
+const cors = require('cors')
 const app = express();
 const PORT = process.env.PORT || 3000;
 const presentationRoutes = require("./routes/presentationRoutes");
 
-
-
 connectDB();
+
 app.use(logger);
+
+app.use(cors({
+  origin: 'http://localhost:5173', // The origin you want to allow
+  methods: 'GET,POST,PATCH,DELETE', // Allowed methods
+}));
 
 app.use(express.json());
 
 app.use("/presentations", presentationRoutes);
 
 if (process.env.NODE_ENV === "development") {
-  const swaggerConfig = require('./docs/swaggerConfig');
+  const swaggerConfig = require("./docs/swaggerConfig");
   swaggerConfig(app);
 }
 
@@ -35,7 +39,6 @@ app.all("*", (req, res) => {
 });
 
 app.use(errorHandler);
-
 
 mongoose.connection.once("open", () => {
   console.log("Connected to mongoDB");
