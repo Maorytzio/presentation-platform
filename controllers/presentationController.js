@@ -16,7 +16,7 @@ const createPresentation = asyncHandler(async (req, res) => {
   const presentation = new Presentation({ title, authors, slides });
   await presentation.save();
 
-  res.status(201).json({ message: `New presentation ${title} created` });
+  res.status(201).json({ presentation });
 });
 
 const getAllPresentations = asyncHandler(async (req, res) => {
@@ -102,7 +102,6 @@ const deleteSlideFromPresentation = asyncHandler(async (req, res) => {
   if (!presentation) {
     return res.status(404).json({ message: "Presentation not found" });
   }
-
 
   presentation.slides.pull({ _id: slideId });
   await presentation.save();

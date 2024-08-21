@@ -15,10 +15,7 @@ connectDB();
 
 app.use(logger);
 
-app.use(cors({
-  origin: 'http://localhost:5173', // The origin you want to allow
-  methods: 'GET,POST,PATCH,DELETE', // Allowed methods
-}));
+app.use(cors());
 
 app.use(express.json());
 
